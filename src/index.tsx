@@ -36,6 +36,7 @@ type ComponentProps<T> = ViewComponentProps<T> &
     loaderHeight?: number;
     wrapperStyle?: StyleProp<ViewStyle>;
     containerStyle?: StyleProp<ViewStyle>;
+    scrollAnimatedValue?: Animated.SharedValue<number>;
   };
 
 type ComponentWithChildrenProps<T> = ComponentProps<T> & {

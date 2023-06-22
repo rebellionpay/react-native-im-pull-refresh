@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import {
+import Animated, {
   runOnJS,
   useAnimatedRef,
   useSharedValue,
@@ -18,6 +18,7 @@ interface Props extends BasicScrollProps {
   power: number;
   bounceOnPull: boolean;
   loaderHeight: number;
+  scrollAnimatedValue?: Animated.SharedValue<number>;
 }
 
 function usePullRefreshScrollView({
@@ -26,6 +27,7 @@ function usePullRefreshScrollView({
   power,
   bounceOnPull,
   loaderHeight,
+  scrollAnimatedValue,
   ...viewProps
 }: Props) {
   const ref = useAnimatedRef<any>();
@@ -95,6 +97,10 @@ function usePullRefreshScrollView({
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
       'worklet';
+      if (scrollAnimatedValue) {
+        scrollAnimatedValue.value = event.contentOffset.y;
+      }
+
       onScrollProxy && onScrollProxy(event);
       scrollY.value = event.contentOffset.y;
     },
